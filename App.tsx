@@ -6,6 +6,8 @@ import { Ionicons } from "@expo/vector-icons";
 import * as Font from "expo-font";
 import { NavigationContainer } from "@react-navigation/native";
 import Tabs from "./navigation/Tabs";
+import { ThemeProvider } from "styled-components/native";
+import { darkTheme, lightTheme } from "./themes";
 
 const loadFonts = (fonts) => fonts.map((font) => Font.loadAsync(font));
 
@@ -41,9 +43,11 @@ export default function App() {
     );
   }
   return (
-    <NavigationContainer>
-      <Tabs />
-    </NavigationContainer>
+    <ThemeProvider theme={darkTheme}>
+      <NavigationContainer>
+        <Tabs />
+      </NavigationContainer>
+    </ThemeProvider>
   );
 }
 

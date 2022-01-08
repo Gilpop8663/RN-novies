@@ -10,10 +10,13 @@ import colors from "../colors";
 const Tab = createBottomTabNavigator();
 
 const Tabs = () => {
-  const isDark = useColorScheme() === "dark";
+  const isDark = useColorScheme() !== "dark";
   console.log(isDark);
   return (
     <Tab.Navigator
+      sceneContainerStyle={{
+        backgroundColor: isDark ? colors.black : "white",
+      }}
       screenOptions={{
         tabBarStyle: {
           backgroundColor: isDark ? colors.black : "white",
