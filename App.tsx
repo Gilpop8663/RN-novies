@@ -43,7 +43,7 @@ export default function App() {
     );
   }
   return (
-    <ThemeProvider theme={darkTheme}>
+    <ThemeProvider theme={lightTheme}>
       <NavigationContainer>
         <Tabs />
       </NavigationContainer>
