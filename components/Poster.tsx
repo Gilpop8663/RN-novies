@@ -4,7 +4,7 @@ import { makeUriImage } from "../util";
 const Image = styled.Image`
   width: 100px;
   height: 160px;
-  border-radius: 5;
+  border-radius: 5px;
 `;
 
 interface IPoster {

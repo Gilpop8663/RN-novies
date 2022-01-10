@@ -39,7 +39,6 @@ const Vote = styled(Description)`
 `;
 
 interface ISliderProps {
-  id: string;
   backdropPath: string;
   posterPath: string;
   originalTitle: string;
@@ -48,16 +47,15 @@ interface ISliderProps {
 }
 
 const Slider: React.FC<ISliderProps> = ({
-  id,
   backdropPath,
   posterPath,
   originalTitle,
   voteAverage,
   overview,
 }) => {
-  const isDark = useColorScheme() === "dark";
+  const isDark = useColorScheme() !== "dark";
   return (
-    <Screen key={id}>
+    <Screen>
       <BgImg
         style={StyleSheet.absoluteFill}
         source={{ uri: makeUriImage(backdropPath) }}

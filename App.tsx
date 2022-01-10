@@ -7,7 +7,11 @@ import * as Font from "expo-font";
 import { NavigationContainer } from "@react-navigation/native";
 import Tabs from "./navigation/Tabs";
 import { ThemeProvider } from "styled-components/native";
+import { QueryClient, QueryClientProvider, useQuery } from "react-query";
 import { darkTheme, lightTheme } from "./themes";
+import { LogBox } from "react-native";
+
+const queryClient = new QueryClient();
 
 const loadFonts = (fonts) => fonts.map((font) => Font.loadAsync(font));
 
@@ -21,6 +25,7 @@ const loadImages = (images) =>
   });
 
 export default function App() {
+  LogBox.ignoreLogs(["Setting a timer for a long period of time"]);
   const [ready, setReady] = useState(false);
   const startLoading = async () => {
     const fonts = loadFonts([Ionicons.font]);
@@ -43,11 +48,13 @@ export default function App() {
     );
   }
   return (
-    <ThemeProvider theme={lightTheme}>
-      <NavigationContainer>
-        <Tabs />
-      </NavigationContainer>
-    </ThemeProvider>
+    <QueryClientProvider client={queryClient}>
+      <ThemeProvider theme={darkTheme}>
+        <NavigationContainer>
+          <Tabs />
+        </NavigationContainer>
+      </ThemeProvider>
+    </QueryClientProvider>
   );
 }
 
