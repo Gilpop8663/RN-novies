@@ -1,11 +1,12 @@
 import React from "react";
-import { FlatList, ScrollView } from "react-native";
-import { useQuery } from "react-query";
-import { movieApi, MovieResponse, tvApi, TvResponse } from "../api";
-import HMedia from "../components/HMedia";
+import { RefreshControl, ScrollView } from "react-native";
+import { useQuery, useQueryClient } from "react-query";
+import { MovieResponse, tvApi, TvResponse } from "../api";
+import HList from "../components/HList";
 import Loader from "../components/Loader";
 
 const Tv = () => {
+  const queryClient = useQueryClient();
   const {
     isLoading: onAiringLoading,
     data: onAiringData,
@@ -21,26 +22,30 @@ const Tv = () => {
     isLoading: trendingLoading,
     data: trendingData,
     isRefetching: trendingRefetching,
-  } = useQuery<MovieResponse>(["movies", "trending"], movieApi.getTrending);
+  } = useQuery<MovieResponse>(["tv", "trending"], tvApi.trending);
   const loading = onAiringLoading || trendingLoading || topRatedLoading;
-  console.log(topRatedLoading);
+  const refreshing =
+    onAiringRefetching || topRatedRefetching || trendingRefetching;
+  const onRefresh = async () => {
+    queryClient.refetchQueries(["tv"]);
+  };
   //console.log(loading ? null : topRatedData);
   if (loading) {
     return <Loader></Loader>;
   }
   return (
-    <FlatList
-      data={topRatedData?.results}
-      horizontal
-      keyExtractor={(item) => item.id + ""}
-      renderItem={({ item }) => (
-        <HMedia
-          originalTitle={item.original_name}
-          posterPath={item.poster_path}
-          voteAverage={item.vote_average}
-        ></HMedia>
-      )}
-    ></FlatList>
+    <ScrollView
+      refreshControl={
+        <RefreshControl
+          refreshing={refreshing}
+          onRefresh={onRefresh}
+        ></RefreshControl>
+      }
+    >
+      <HList title="Trending TV" data={trendingData?.results}></HList>
+      <HList title="Aring Today" data={onAiringData?.results}></HList>
+      <HList title="Top Rated TV" data={topRatedData?.results}></HList>
+    </ScrollView>
   );
 };
 export default Tv;

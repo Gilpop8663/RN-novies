@@ -9,7 +9,6 @@ import Tabs from "./navigation/Tabs";
 import { ThemeProvider } from "styled-components/native";
 import { QueryClient, QueryClientProvider, useQuery } from "react-query";
 import { darkTheme, lightTheme } from "./themes";
-import { LogBox } from "react-native";
 
 const queryClient = new QueryClient();
 
@@ -25,7 +24,6 @@ const loadImages = (images) =>
   });
 
 export default function App() {
-  LogBox.ignoreLogs(["Setting a timer for a long period of time"]);
   const [ready, setReady] = useState(false);
   const startLoading = async () => {
     const fonts = loadFonts([Ionicons.font]);
