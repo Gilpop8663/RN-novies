@@ -25,28 +25,20 @@ const HSeparator = styled.View`
 const movieKeyExtractor = (item: Movie) => item.id + "";
 
 const Movies = () => {
+  const [refreshing, setRefreshing] = useState(false);
   const queryClient = useQueryClient();
-  const {
-    isLoading: nowPlayingLoading,
-    data: nowPlayingData,
-    isRefetching: nowPlayingRefetching,
-  } = useQuery<MovieResponse>(["movies", "nowPlaying"], movieApi.getNowPlaying);
-  const {
-    isLoading: trendingLoading,
-    data: trendingData,
-    isRefetching: trendingRefetching,
-  } = useQuery<MovieResponse>(["movies", "trending"], movieApi.getTrending);
-  const {
-    isLoading: upcomingLoading,
-    data: upcomingData,
-    isRefetching: upcomingRefetching,
-  } = useQuery<MovieResponse>(["movies", "upcoming"], movieApi.getUpcoming);
-  const refreshing =
-    nowPlayingRefetching || trendingRefetching || upcomingRefetching;
+  const { isLoading: nowPlayingLoading, data: nowPlayingData } =
+    useQuery<MovieResponse>(["movies", "nowPlaying"], movieApi.getNowPlaying);
+  const { isLoading: trendingLoading, data: trendingData } =
+    useQuery<MovieResponse>(["movies", "trending"], movieApi.getTrending);
+  const { isLoading: upcomingLoading, data: upcomingData } =
+    useQuery<MovieResponse>(["movies", "upcoming"], movieApi.getUpcoming);
 
   const loading = nowPlayingLoading || trendingLoading || upcomingLoading;
   const onRefresh = async () => {
-    queryClient.refetchQueries(["movies"]);
+    setRefreshing(true);
+    await queryClient.refetchQueries(["movies"]);
+    setRefreshing(false);
   };
   useEffect(() => {}, []);
 
