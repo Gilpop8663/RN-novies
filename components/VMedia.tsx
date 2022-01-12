@@ -1,4 +1,6 @@
+import { useNavigation } from "@react-navigation/native";
 import React from "react";
+import { TouchableOpacity } from "react-native";
 import styled from "styled-components/native";
 import Poster from "./Poster";
 import Vote from "./Vote";
@@ -34,21 +36,27 @@ const VMedia: React.FC<IVMedia> = ({
   voteAverage,
   overview,
 }) => {
+  const navigation = useNavigation();
+  const goToDetail = () => {
+    navigation.navigate("Stack", { screen: "Detail" });
+  };
   return (
-    <UpcomingWrapper style={{ paddingHorizontal: 30 }}>
-      <Poster path={posterPath} />
-      <Column>
-        <Title style={{ marginBottom: 10 }}>
-          {originalTitle.slice(0, 15)}
-          {originalTitle.length > 15 ? "..." : null}
-        </Title>
-        <Overview>
-          {overview.slice(0, 130)}
-          {overview.length > 130 ? "..." : null}
-        </Overview>
-        <Vote voteAverage={voteAverage} />
-      </Column>
-    </UpcomingWrapper>
+    <TouchableOpacity onPress={goToDetail}>
+      <UpcomingWrapper style={{ paddingHorizontal: 30 }}>
+        <Poster path={posterPath} />
+        <Column>
+          <Title style={{ marginBottom: 10 }}>
+            {originalTitle.slice(0, 15)}
+            {originalTitle.length > 15 ? "..." : null}
+          </Title>
+          <Overview>
+            {overview.slice(0, 130)}
+            {overview.length > 130 ? "..." : null}
+          </Overview>
+          <Vote voteAverage={voteAverage} />
+        </Column>
+      </UpcomingWrapper>
+    </TouchableOpacity>
   );
 };
 

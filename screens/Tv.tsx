@@ -12,18 +12,18 @@ const Tv = () => {
     isLoading: onAiringLoading,
     data: onAiringData,
     isRefetching: onAiringRefetching,
-  } = useQuery<TvResponse>(["tv", "onAiring"], tvApi.onAiring);
+  } = useQuery<TvResponse>(["tv", "onAiringas"], tvApi.onAiring);
 
   const {
     isLoading: topRatedLoading,
     data: topRatedData,
     isRefetching: topRatedRefetching,
-  } = useQuery<TvResponse>(["tv", "topRated"], tvApi.topRated);
+  } = useQuery<TvResponse>(["tv", "topRatedas"], tvApi.topRated);
   const {
     isLoading: trendingLoading,
     data: trendingData,
     isRefetching: trendingRefetching,
-  } = useQuery<MovieResponse>(["tv", "trending"], tvApi.trending);
+  } = useQuery<MovieResponse>(["tv", "trendingas"], tvApi.trending);
   const loading = onAiringLoading || trendingLoading || topRatedLoading;
   const onRefresh = async () => {
     setRefreshing(true);

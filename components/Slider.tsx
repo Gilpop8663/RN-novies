@@ -1,5 +1,10 @@
+import { useNavigation } from "@react-navigation/native";
 import { BlurView } from "expo-blur";
-import { StyleSheet, useColorScheme } from "react-native";
+import {
+  StyleSheet,
+  TouchableWithoutFeedback,
+  useColorScheme,
+} from "react-native";
 import styled from "styled-components/native";
 import { makeUriImage } from "../util";
 import Poster from "./Poster";
@@ -53,28 +58,34 @@ const Slider: React.FC<ISliderProps> = ({
   voteAverage,
   overview,
 }) => {
+  const navigation = useNavigation();
+  const goToDetail = () => {
+    navigation.navigate("Stack", { screen: "Detail" });
+  };
   const isDark = useColorScheme() !== "dark";
   return (
-    <Screen>
-      <BgImg
-        style={StyleSheet.absoluteFill}
-        source={{ uri: makeUriImage(backdropPath) }}
-      ></BgImg>
-      <BlurView
-        style={StyleSheet.absoluteFill}
-        intensity={90}
-        tint={isDark ? "dark" : "light"}
-      >
-        <Wrapper>
-          <Poster path={posterPath} />
-          <Column>
-            <Title>{originalTitle}</Title>
-            <Vote>{voteAverage > 0 ? `⭐️${voteAverage}/10` : null}</Vote>
-            <Description>{overview.slice(0, 100)}...</Description>
-          </Column>
-        </Wrapper>
-      </BlurView>
-    </Screen>
+    <TouchableWithoutFeedback onPress={goToDetail}>
+      <Screen>
+        <BgImg
+          style={StyleSheet.absoluteFill}
+          source={{ uri: makeUriImage(backdropPath) }}
+        ></BgImg>
+        <BlurView
+          style={StyleSheet.absoluteFill}
+          intensity={90}
+          tint={isDark ? "dark" : "light"}
+        >
+          <Wrapper>
+            <Poster path={posterPath} />
+            <Column>
+              <Title>{originalTitle}</Title>
+              <Vote>{voteAverage > 0 ? `⭐️${voteAverage}/10` : null}</Vote>
+              <Description>{overview.slice(0, 100)}...</Description>
+            </Column>
+          </Wrapper>
+        </BlurView>
+      </Screen>
+    </TouchableWithoutFeedback>
   );
 };
 

@@ -9,6 +9,8 @@ import Tabs from "./navigation/Tabs";
 import { ThemeProvider } from "styled-components/native";
 import { QueryClient, QueryClientProvider, useQuery } from "react-query";
 import { darkTheme, lightTheme } from "./themes";
+import Stack from "./navigation/Stack";
+import Root from "./navigation/Root";
 
 const queryClient = new QueryClient();
 
@@ -49,7 +51,7 @@ export default function App() {
     <QueryClientProvider client={queryClient}>
       <ThemeProvider theme={darkTheme}>
         <NavigationContainer>
-          <Tabs />
+          <Root />
         </NavigationContainer>
       </ThemeProvider>
     </QueryClientProvider>
