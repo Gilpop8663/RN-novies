@@ -2,7 +2,7 @@ import { Text, View } from "react-native";
 
 const Detail = () => (
   <View>
-    <Text>Go To Detail</Text>
+    <Text>Lets Go To Detail</Text>
   </View>
 );
 
