@@ -71,6 +71,7 @@ const Movies = () => {
                 originalTitle={item.original_title}
                 voteAverage={item.vote_average}
                 overview={item.overview}
+                fullData={item}
               />
             ))}
           </Swiper>
@@ -89,6 +90,7 @@ const Movies = () => {
                 voteAverage={item.vote_average}
                 originalTitle={item.original_title}
                 posterPath={item.poster_path}
+                fullData={item}
               />
             )}
           ></FlatList>
@@ -110,6 +112,7 @@ const Movies = () => {
           originalTitle={item.original_title}
           voteAverage={item.vote_average}
           posterPath={item.poster_path}
+          fullData={item}
         ></VMedia>
       )}
     ></FlatList>

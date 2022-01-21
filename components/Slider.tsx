@@ -6,6 +6,7 @@ import {
   useColorScheme,
 } from "react-native";
 import styled from "styled-components/native";
+import { Movie } from "../api";
 import { makeUriImage } from "../util";
 import Poster from "./Poster";
 
@@ -49,6 +50,7 @@ interface ISliderProps {
   originalTitle: string;
   voteAverage: number;
   overview: string;
+  fullData: Movie;
 }
 
 const Slider: React.FC<ISliderProps> = ({
@@ -57,10 +59,11 @@ const Slider: React.FC<ISliderProps> = ({
   originalTitle,
   voteAverage,
   overview,
+  fullData,
 }) => {
   const navigation = useNavigation();
   const goToDetail = () => {
-    navigation.navigate("Stack", { screen: "Detail" });
+    navigation.navigate("Stack", { screen: "Detail", params: { ...fullData } });
   };
   const isDark = useColorScheme() !== "dark";
   return (
