@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { useQuery } from "react-query";
 import styled from "styled-components/native";
-import { movieApi, tvApi } from "../api";
+import { movieApi, MovieResponse, tvApi, TvResponse } from "../api";
 import HList from "../components/HList";
 import Loader from "../components/Loader";
 
@@ -17,19 +17,23 @@ const SearchBar = styled.TextInput`
 
 const Search = () => {
   const [query, setQuery] = useState("");
+  const onChangeText = (text: string) => {
+    setQuery(text);
+  };
   const {
     isLoading: moviesLoading,
     data: moviesData,
     refetch: searchMovies,
-  } = useQuery(["searchMovies", query], movieApi.search, { enabled: false });
+  } = useQuery<MovieResponse>(["searchMoviess", query], movieApi.search, {
+    enabled: false,
+  });
   const {
     isLoading: tvLoading,
     data: tvData,
     refetch: searchTv,
-  } = useQuery(["searchTv", query], tvApi.search, { enabled: false });
-  const onChangeText = (text: string) => {
-    setQuery(text);
-  };
+  } = useQuery<TvResponse>(["searchTv", query], tvApi.search, {
+    enabled: false,
+  });
   const onSubmit = async () => {
     if (query === "") {
       return;

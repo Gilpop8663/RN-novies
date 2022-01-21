@@ -61,12 +61,15 @@ export const movieApi = {
     fetch(
       `${BASE_URL}/movie/now_playing?api_key=${API_KEY}&language=ko&page=1`
     ).then((res) => res.json()),
-  search: ({ queryKey }) => {
-    const [_, query] = queryKey;
-    return fetch(`
-    https://api.themoviedb.org/3/search/movie?api_key=${API_KEY}&language=ko&query=${query}
-      `).then((res) => res.json());
-  },
+  search: () =>
+    // const [_, query] = queryKey;
+    fetch(`
+      ${BASE_URL}/search/movie?api_key=${API_KEY}&language=ko&query=spider
+      `).then((res) => res.json()),
+  spiderSearch: () =>
+    fetch(
+      `https://api.themoviedb.org/3/search/movie?api_key=8ada0ba81365b222c17dc83dc8b3e61d&language=ko&query=Spider`
+    ).then((res) => res.json()),
 };
 
 export const tvApi = {
@@ -82,12 +85,16 @@ export const tvApi = {
     fetch(`${BASE_URL}/tv/top_rated?api_key=${API_KEY}`).then((res) =>
       res.json()
     ),
-  search: ({ queryKey }) => {
-    const [_, query] = queryKey;
-    console.log(query);
-    return fetch(`
-    https://api.themoviedb.org/3/search/tv?api_key=${API_KEY}&language=ko&query=${query}`).then(
+  search: () =>
+    // const [_, query] = queryKey;
+    // console.log("tv에서의" + query);
+
+    fetch(`
+      ${BASE_URL}/search/tv?api_key=${API_KEY}&language=ko&query=spider`).then(
       (res) => res.json()
-    );
-  },
+    ),
+  spiderSearch: () =>
+    fetch(
+      `https://api.themoviedb.org/3/search/tv?api_key=8ada0ba81365b222c17dc83dc8b3e61d&language=ko&query=Spider`
+    ).then((res) => res.json()),
 };
