@@ -6,7 +6,7 @@ import Swiper from "react-native-swiper";
 import Slider from "../components/Slider";
 import HMedia from "../components/HMedia";
 import VMedia from "../components/VMedia";
-import { useQuery, useQueryClient } from "react-query";
+import { useInfiniteQuery, useQuery, useQueryClient } from "react-query";
 import { Movie, movieApi, MovieResponse } from "../api";
 import Loader from "../components/Loader";
 
@@ -31,8 +31,21 @@ const Movies = () => {
     useQuery<MovieResponse>(["movies", "nowPlaying"], movieApi.getNowPlaying);
   const { isLoading: trendingLoading, data: trendingData } =
     useQuery<MovieResponse>(["movies", "trending"], movieApi.getTrending);
-  const { isLoading: upcomingLoading, data: upcomingData } =
-    useQuery<MovieResponse>(["movies", "upcoming"], movieApi.getUpcoming);
+  const {
+    isLoading: upcomingLoading,
+    data: upcomingData,
+    hasNextPage,
+    fetchNextPage,
+  } = useInfiniteQuery<MovieResponse>(
+    ["movies", "upcoming"],
+    movieApi.getUpcoming,
+    {
+      getNextPageParam: (currentPage) => {
+        const nextPage = currentPage.page + 1;
+        return nextPage > currentPage.total_pages ? null : nextPage;
+      },
+    }
+  );
 
   const loading = nowPlayingLoading || trendingLoading || upcomingLoading;
   const onRefresh = async () => {
@@ -40,7 +53,11 @@ const Movies = () => {
     await queryClient.refetchQueries(["movies"]);
     setRefreshing(false);
   };
-  useEffect(() => {}, []);
+  const loadMore = () => {
+    if (hasNextPage) {
+      fetchNextPage();
+    }
+  };
 
   return loading ? (
     <Loader></Loader>
@@ -100,7 +117,8 @@ const Movies = () => {
           </Title>
         </>
       }
-      data={upcomingData.results}
+      onEndReached={loadMore}
+      data={upcomingData.pages.map((item) => item.results).flat()}
       ItemSeparatorComponent={HSeparator}
       contentContainerStyle={{}}
       showsHorizontalScrollIndicator={false}
