@@ -9,6 +9,7 @@ import VMedia from "../components/VMedia";
 import { useInfiniteQuery, useQuery, useQueryClient } from "react-query";
 import { Movie, movieApi, MovieResponse } from "../api";
 import Loader from "../components/Loader";
+import { isNextPage, keyExtractor, loadMore } from "../util";
 
 const Title = styled.Text`
   color: ${(props) => props.theme.textColor};
@@ -29,34 +30,36 @@ const Movies = () => {
   const queryClient = useQueryClient();
   const { isLoading: nowPlayingLoading, data: nowPlayingData } =
     useQuery<MovieResponse>(["movies", "nowPlaying"], movieApi.getNowPlaying);
-  const { isLoading: trendingLoading, data: trendingData } =
-    useQuery<MovieResponse>(["movies", "trending"], movieApi.getTrending);
+  const {
+    isLoading: trendingLoading,
+    data: trendingData,
+    hasNextPage: trendingHasNext,
+    fetchNextPage: trendingFetchNext,
+  } = useInfiniteQuery<MovieResponse>(
+    ["movies", "trending"],
+    movieApi.getTrending,
+    {
+      getNextPageParam: isNextPage,
+    }
+  );
   const {
     isLoading: upcomingLoading,
     data: upcomingData,
-    hasNextPage,
-    fetchNextPage,
+    hasNextPage: upcomingHasNext,
+    fetchNextPage: upcomingFetchNext,
   } = useInfiniteQuery<MovieResponse>(
     ["movies", "upcoming"],
     movieApi.getUpcoming,
     {
-      getNextPageParam: (currentPage) => {
-        const nextPage = currentPage.page + 1;
-        return nextPage > currentPage.total_pages ? null : nextPage;
-      },
+      getNextPageParam: isNextPage,
     }
   );
-
+  //console.log(trendingData.pageParams);
   const loading = nowPlayingLoading || trendingLoading || upcomingLoading;
   const onRefresh = async () => {
     setRefreshing(true);
     await queryClient.refetchQueries(["movies"]);
     setRefreshing(false);
-  };
-  const loadMore = () => {
-    if (hasNextPage) {
-      fetchNextPage();
-    }
   };
 
   return loading ? (
@@ -96,9 +99,12 @@ const Movies = () => {
             Trending Movies
           </Title>
           <FlatList
+            onEndReached={() => loadMore(trendingHasNext, trendingFetchNext)}
             horizontal
-            data={trendingData.results}
-            keyExtractor={movieKeyExtractor}
+            data={trendingData?.pages
+              ?.map((item: MovieResponse) => item.results)
+              .flat()}
+            keyExtractor={keyExtractor}
             showsHorizontalScrollIndicator={false}
             contentContainerStyle={{ paddingHorizontal: 30 }}
             ItemSeparatorComponent={VSeparator}
@@ -117,12 +123,14 @@ const Movies = () => {
           </Title>
         </>
       }
-      onEndReached={loadMore}
-      data={upcomingData.pages.map((item) => item.results).flat()}
+      onEndReached={() => loadMore(upcomingHasNext, upcomingFetchNext)}
+      data={upcomingData.pages
+        .map((item: MovieResponse) => item.results)
+        .flat()}
       ItemSeparatorComponent={HSeparator}
       contentContainerStyle={{}}
       showsHorizontalScrollIndicator={false}
-      keyExtractor={movieKeyExtractor}
+      keyExtractor={keyExtractor}
       renderItem={({ item }) => (
         <VMedia
           key={item.id}

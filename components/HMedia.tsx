@@ -15,7 +15,7 @@ const Title = styled.Text`
 interface IHMedia {
   originalTitle: string;
   posterPath: string;
-  voteAverage: number;
+  voteAverage?: number;
   fullData: Movie;
 }
 

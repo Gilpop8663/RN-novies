@@ -1,9 +1,10 @@
 import React, { useState } from "react";
 import { RefreshControl, ScrollView } from "react-native";
-import { useQuery, useQueryClient } from "react-query";
+import { useInfiniteQuery, useQuery, useQueryClient } from "react-query";
 import { MovieResponse, tvApi, TvResponse } from "../api";
 import HList from "../components/HList";
 import Loader from "../components/Loader";
+import { isNextPage } from "../util";
 
 const Tv = () => {
   const [refreshing, setRefreshing] = useState(false);
@@ -12,18 +13,30 @@ const Tv = () => {
     isLoading: onAiringLoading,
     data: onAiringData,
     isRefetching: onAiringRefetching,
-  } = useQuery<TvResponse>(["tv", "onAiringas"], tvApi.onAiring);
+    hasNextPage: onAirHasNext,
+    fetchNextPage: onAirFetchNext,
+  } = useInfiniteQuery<TvResponse>(["tv", "onAiringas"], tvApi.onAiring, {
+    getNextPageParam: isNextPage,
+  });
 
   const {
     isLoading: topRatedLoading,
     data: topRatedData,
     isRefetching: topRatedRefetching,
-  } = useQuery<TvResponse>(["tv", "topRatedas"], tvApi.topRated);
+    hasNextPage: topRatedHasNext,
+    fetchNextPage: topRatedFetchNext,
+  } = useInfiniteQuery<TvResponse>(["tv", "topRatedas"], tvApi.topRated, {
+    getNextPageParam: isNextPage,
+  });
   const {
     isLoading: trendingLoading,
     data: trendingData,
     isRefetching: trendingRefetching,
-  } = useQuery<MovieResponse>(["tv", "trendingas"], tvApi.trending);
+    hasNextPage: tvTrendingHasNext,
+    fetchNextPage: tvTrendingFetchNext,
+  } = useInfiniteQuery<MovieResponse>(["tv", "trendingas"], tvApi.trending, {
+    getNextPageParam: isNextPage,
+  });
   const loading = onAiringLoading || trendingLoading || topRatedLoading;
   const onRefresh = async () => {
     setRefreshing(true);
@@ -43,9 +56,24 @@ const Tv = () => {
         ></RefreshControl>
       }
     >
-      <HList title="Trending TV" data={trendingData?.results}></HList>
-      <HList title="Aring Today" data={onAiringData?.results}></HList>
-      <HList title="Top Rated TV" data={topRatedData?.results}></HList>
+      <HList
+        title="Trending TV"
+        isNext={tvTrendingHasNext}
+        isFetch={tvTrendingFetchNext}
+        data={trendingData?.pages?.map((item) => item.results).flat()}
+      ></HList>
+      <HList
+        isNext={onAirHasNext}
+        isFetch={onAirFetchNext}
+        title="Aring Today"
+        data={onAiringData?.pages?.map((item) => item.results).flat()}
+      ></HList>
+      <HList
+        isNext={topRatedHasNext}
+        isFetch={topRatedFetchNext}
+        title="Top Rated TV"
+        data={topRatedData?.pages?.map((item) => item.results).flat()}
+      ></HList>
     </ScrollView>
   );
 };
