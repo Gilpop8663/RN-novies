@@ -38,6 +38,7 @@ const HList: React.FC<IHList> = ({ title, data, isNext, isFetch }) => {
       <FlatList
         horizontal
         data={data}
+        onEndReachedThreshold={1}
         onEndReached={() => loadMore(hasNext, fetchNext)}
         keyExtractor={keyExtractor}
         showsHorizontalScrollIndicator={false}

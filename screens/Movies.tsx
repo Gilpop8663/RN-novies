@@ -73,7 +73,7 @@ const Movies = () => {
           <Swiper
             containerStyle={{
               width: "100%",
-              height: SCREEN_HEIGHT / 4,
+              height: SCREEN_HEIGHT / 3,
               marginBottom: 30,
             }}
             loop
@@ -99,6 +99,7 @@ const Movies = () => {
             Trending Movies
           </Title>
           <FlatList
+            onEndReachedThreshold={1}
             onEndReached={() => loadMore(trendingHasNext, trendingFetchNext)}
             horizontal
             data={trendingData?.pages
@@ -123,6 +124,7 @@ const Movies = () => {
           </Title>
         </>
       }
+      onEndReachedThreshold={1}
       onEndReached={() => loadMore(upcomingHasNext, upcomingFetchNext)}
       data={upcomingData.pages
         .map((item: MovieResponse) => item.results)
