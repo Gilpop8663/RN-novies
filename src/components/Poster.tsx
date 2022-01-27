@@ -1,5 +1,5 @@
 import styled from "styled-components/native";
-import { makeUriImage } from "../util";
+import { makeUriImage } from "../utils/util";
 
 const Image = styled.Image`
   width: 100px;

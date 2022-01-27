@@ -1,16 +1,17 @@
-import { Image, StyleSheet, Text, View } from "react-native";
+import { Image, StatusBar, StyleSheet, Text, View } from "react-native";
 import AppLoading from "expo-app-loading";
 import { useState } from "react";
 import { Asset } from "expo-asset";
 import { Ionicons } from "@expo/vector-icons";
 import * as Font from "expo-font";
 import { NavigationContainer } from "@react-navigation/native";
-import Tabs from "./navigation/Tabs";
+import Tabs from "./src/navigation/Tabs";
 import { ThemeProvider } from "styled-components/native";
 import { QueryClient, QueryClientProvider, useQuery } from "react-query";
 import { darkTheme, lightTheme } from "./themes";
-import Stack from "./navigation/Stack";
-import Root from "./navigation/Root";
+import Stack from "./src/navigation/Stack";
+import Root from "./src/navigation/Root";
+import colors from "./colors";
 
 const queryClient = new QueryClient();
 
@@ -30,7 +31,7 @@ export default function App() {
   const startLoading = async () => {
     const fonts = loadFonts([Ionicons.font]);
     const images = loadImages([
-      require("./img/my_img.png"),
+      require("./src/assets/fish.png"),
       "https://reactnative.dev/img/oss_logo.png",
     ]);
     await Promise.all([...fonts, ...images]);
@@ -52,6 +53,7 @@ export default function App() {
       <ThemeProvider theme={darkTheme}>
         <NavigationContainer>
           <Root />
+          <StatusBar backgroundColor={colors.black} style="light" />
         </NavigationContainer>
       </ThemeProvider>
     </QueryClientProvider>

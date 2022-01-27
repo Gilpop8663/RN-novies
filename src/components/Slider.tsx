@@ -7,7 +7,7 @@ import {
 } from "react-native";
 import styled from "styled-components/native";
 import { Movie } from "../api";
-import { makeUriImage } from "../util";
+import { makeUriImage } from "../utils/util";
 import Poster from "./Poster";
 
 const Screen = styled.View`

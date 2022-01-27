@@ -1,7 +1,7 @@
 import { FlatList } from "react-native";
 import styled from "styled-components/native";
 import { Movie, MovieResponse, Tv, TvResponse } from "../api";
-import { keyExtractor, loadMore } from "../util";
+import { keyExtractor, loadMore } from "../utils/util";
 import HMedia from "./HMedia";
 
 const ListContainer = styled.View`
@@ -10,6 +10,7 @@ const ListContainer = styled.View`
 
 const Title = styled.Text`
   color: ${(props) => props.theme.textColor};
+  font-weight: 600;
 `;
 
 const VSeparator = styled.View`
@@ -32,7 +33,7 @@ const HList: React.FC<IHList> = ({ title, data, isNext, isFetch }) => {
   const fetchNext = isFetch;
   return (
     <ListContainer>
-      <Title style={{ marginLeft: 30, marginBottom: 10, fontSize: 18 }}>
+      <Title style={{ marginLeft: 30, marginVertical: 20, fontSize: 18 }}>
         {title}
       </Title>
       <FlatList
@@ -47,7 +48,7 @@ const HList: React.FC<IHList> = ({ title, data, isNext, isFetch }) => {
         renderItem={({ item }) => (
           <HMedia
             voteAverage={item.vote_average}
-            originalTitle={item.original_title ?? item.original_name}
+            originalTitle={item.original_title ? item.title : item.name}
             posterPath={item.poster_path}
             fullData={item}
           />

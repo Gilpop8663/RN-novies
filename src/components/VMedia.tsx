@@ -8,6 +8,7 @@ import Vote from "./Vote";
 
 const Title = styled.Text`
   color: white;
+  font-weight: 600;
 `;
 
 const UpcomingWrapper = styled.View`

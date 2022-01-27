@@ -12,8 +12,8 @@ import * as WebBrowser from "expo-web-browser";
 import Poster from "../components/Poster";
 import { Movie, movieApi, Tv, tvApi } from "../api";
 import styled from "styled-components/native";
-import { makeUriImage } from "../util";
-import colors from "../colors";
+import { makeUriImage } from "../utils/util";
+import colors from "../../colors";
 import { useQuery } from "react-query";
 import { Ionicons } from "@expo/vector-icons";
 import Loader from "../components/Loader";
@@ -95,12 +95,12 @@ const Detail: React.FC<DetailScreenProps> = ({
     if (isAndroid) {
       await Share.share({
         message: `${params.overview}\n Check it out : ${homepage} `,
-        title: isMovie ? params.original_title : params.original_name,
+        title: isMovie ? params.title : params.name,
       });
     } else {
       await Share.share({
         url: homepage,
-        title: isMovie ? params.original_title : params.original_name,
+        title: isMovie ? params.title : params.name,
       });
     }
   };
@@ -137,9 +137,7 @@ const Detail: React.FC<DetailScreenProps> = ({
         />
         <Column>
           <Poster path={params.poster_path || ""} />
-          <Title>
-            {isMovie ? params.original_title : params.original_name}
-          </Title>
+          <Title>{isMovie ? params.title : params.name}</Title>
         </Column>
       </Header>
       <DataContainer>

@@ -1,0 +1,19 @@
+{
+  "expo": {
+    "name": "RN-Fish Movies",
+    "slug": "rn-fish-movies",
+    "version": "1.0.0",
+    "assetBundlePatterns": [
+      "**/*"
+    ],
+    "icon": "./src/assets/fish.png",
+    "splash": {
+      "image": "./src/assets/fish.png",
+      "resizeMode": "contain",
+      "backgroundColor": "#ffffff"
+    },
+    "description": "",
+    "githubUrl": "https://github.com/Gilpop8663/RN-novies"
+  },
+  "name": "movieBuild"
+}

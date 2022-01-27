@@ -9,7 +9,7 @@ import VMedia from "../components/VMedia";
 import { useInfiniteQuery, useQuery, useQueryClient } from "react-query";
 import { Movie, movieApi, MovieResponse } from "../api";
 import Loader from "../components/Loader";
-import { isNextPage, keyExtractor, loadMore } from "../util";
+import { isNextPage, keyExtractor, loadMore } from "../utils/util";
 
 const Title = styled.Text`
   color: ${(props) => props.theme.textColor};
@@ -88,7 +88,7 @@ const Movies = () => {
                 key={item.id}
                 backdropPath={item.backdrop_path}
                 posterPath={item.poster_path}
-                originalTitle={item.original_title}
+                originalTitle={item.title}
                 voteAverage={item.vote_average}
                 overview={item.overview}
                 fullData={item}
@@ -96,7 +96,7 @@ const Movies = () => {
             ))}
           </Swiper>
           <Title style={{ marginLeft: 30, marginBottom: 10, fontSize: 18 }}>
-            Trending Movies
+            지금뜨는 콘텐츠
           </Title>
           <FlatList
             onEndReachedThreshold={1}
@@ -112,15 +112,15 @@ const Movies = () => {
             renderItem={({ item }) => (
               <HMedia
                 voteAverage={item.vote_average}
-                originalTitle={item.original_title}
+                originalTitle={item.title}
                 posterPath={item.poster_path}
                 fullData={item}
               />
             )}
           ></FlatList>
 
-          <Title style={{ marginLeft: 30, marginBottom: 10, fontSize: 18 }}>
-            Upcoming Movies
+          <Title style={{ marginLeft: 30, marginVertical: 20, fontSize: 18 }}>
+            기다림이 아깝지 않은 콘텐츠
           </Title>
         </>
       }
@@ -137,7 +137,7 @@ const Movies = () => {
         <VMedia
           key={item.id}
           overview={item.overview}
-          originalTitle={item.original_title}
+          originalTitle={item.title}
           voteAverage={item.vote_average}
           posterPath={item.poster_path}
           fullData={item}

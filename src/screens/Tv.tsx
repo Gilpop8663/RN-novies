@@ -4,7 +4,7 @@ import { useInfiniteQuery, useQuery, useQueryClient } from "react-query";
 import { MovieResponse, tvApi, TvResponse } from "../api";
 import HList from "../components/HList";
 import Loader from "../components/Loader";
-import { isNextPage } from "../util";
+import { isNextPage } from "../utils/util";
 
 const Tv = () => {
   const [refreshing, setRefreshing] = useState(false);
@@ -57,7 +57,7 @@ const Tv = () => {
       }
     >
       <HList
-        title="Trending TV"
+        title="지금 뜨는 콘텐츠"
         isNext={tvTrendingHasNext}
         isFetch={tvTrendingFetchNext}
         data={trendingData?.pages?.map((item) => item.results).flat()}
@@ -65,13 +65,13 @@ const Tv = () => {
       <HList
         isNext={onAirHasNext}
         isFetch={onAirFetchNext}
-        title="Aring Today"
+        title="현재 방영하는 콘텐츠"
         data={onAiringData?.pages?.map((item) => item.results).flat()}
       ></HList>
       <HList
         isNext={topRatedHasNext}
         isFetch={topRatedFetchNext}
-        title="Top Rated TV"
+        title="오늘의 TOP 10 콘텐츠"
         data={topRatedData?.pages?.map((item) => item.results).flat()}
       ></HList>
     </ScrollView>

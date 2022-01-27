@@ -3,7 +3,7 @@ import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import { Text, TouchableOpacity, useColorScheme } from "react-native";
 import styled from "styled-components/native";
 import Detail from "../screens/Detail";
-import colors from "../colors";
+import colors from "../../colors";
 
 const NativeStack = createNativeStackNavigator();
 

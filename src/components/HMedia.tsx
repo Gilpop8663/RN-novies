@@ -34,8 +34,8 @@ const HMedia: React.FC<IHMedia> = ({
       <Wrapper style={{}}>
         <Poster path={posterPath}></Poster>
         <Title>
-          {originalTitle.slice(0, 10)}
-          {originalTitle.length > 10 ? `...` : null}
+          {originalTitle.slice(0, 8)}
+          {originalTitle.length > 8 ? `...` : null}
         </Title>
         <Vote voteAverage={voteAverage} />
       </Wrapper>
