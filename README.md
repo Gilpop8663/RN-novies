@@ -51,7 +51,7 @@ npm install
 
 ### 스와이퍼(Swiper)
 
-    react-native-swiper 라이브러리를 활용한 배너 슬라이드입니다.
++ react-native-swiper 라이브러리를 활용한 배너 슬라이드입니다.
   
 <div align="center"}>
 <img width="50%" src="https://user-images.githubusercontent.com/80146176/151281915-6ecd7ccf-144d-4bbc-9ed8-9aa11682fc3f.gif"/>
@@ -60,7 +60,7 @@ npm install
 
 ### 무한 스크롤 (Infinite Scrolling)
 
-    useQuery 라이브러리의 useInfiniteQuery 를 사용하여 만들었습니다.
++ useQuery 라이브러리의 useInfiniteQuery 를 사용하여 만들었습니다.
     
 <div align="center"}>
 <img width="30%" src="https://user-images.githubusercontent.com/80146176/151283102-30a478eb-49a3-4c29-bac5-f16b70489614.gif"/>
@@ -74,21 +74,20 @@ npm install
 
 ### 검색 기능
 
-    useQuery를 사용해 Search API 를 불러와 검색을 진행하였고 사용자가 검색한 query를 useQuery의 배열값으로 받아서 사용했습니다
-    EX) const {data} = useQuery<MovieResponse>(["searchMoviess", query], movieApi.search, {enabled: false,});
-    
++ useQuery를 사용해 Search API 를 불러와 검색을 진행하였고 사용자가 검색한 query를 useQuery의 배열값으로 받아서 사용했습니다
+```javascript
+EX) const {data} = useQuery<MovieResponse>(["searchMoviess", query], movieApi.search, {enabled: false,});
+```
+
 <div align="center"}>
   <img width="30%" src="https://user-images.githubusercontent.com/80146176/151285843-1bc56a26-eb5a-4047-af34-361c624c29ba.gif"/>
 </div>
 
 ### 디테일 스크린 구현(Detail Screen)
 
-    react-navigation 라이브러리를 이용해 Tab과 Stack 기능을 구현하였고 그 중에 Stack을 이용해 data를 detail페이지의 params로 보내서
-    params.id를 통해 detail API를 불러올 수 있었습니다
++ react-navigation 라이브러리를 이용해 Tab과 Stack 기능을 구현하였고 그 중에 Stack을 이용해 data를 detail페이지의 params로 보내서 params.id를 통해 detail API를 불러올 수 있었습니다
     
-    react-native 의 Share,Platform 기능과 expo-web-browser 라이브러리를 이용해 영화 정보를 공유할 수 있도록 하였습니다.
-    Platform 으로 안드로이드와 ios를 구분하여 전달하는 데이터를 달리 하였고 expo-web-browser 을 사용하여 유튜브 링크를 
-    열고 닫았을 때 다시 어플로 돌아오도록 하였습니다.
++ react-native 의 Share,Platform 기능과 expo-web-browser 라이브러리를 이용해 영화 정보를 공유할 수 있도록 하였습니다. Platform 으로 안드로이드와 ios를 구분하여 전달하는 데이터를 달리 하였고 expo-web-browser 을 사용하여 유튜브 링크를 열고 닫았을 때 다시 어플로 돌아오도록 하였습니다.
     
 
 <div align="center"}>
